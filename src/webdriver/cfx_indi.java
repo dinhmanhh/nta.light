@@ -50,7 +50,7 @@ public class cfx_indi {
 	}
 
 	@Test
-	public void TC_01_Register_Indi() {
+	public void CFX_01_Register_Indi() {
 		// go to registration email page
 		driver.get("https://reg-cfx-uatjp.nextop.asia/registration");
 		// input email
