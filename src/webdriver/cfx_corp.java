@@ -1,7 +1,9 @@
 
 package webdriver;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -41,17 +43,16 @@ public class cfx_corp {
 		driver = new ChromeDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
-		email = "corp" + rand.nextInt(9999999) + "@maillinator.com";
 		password = "a123456789";
 		establishedDate = "200001";
 		usernameBE = "manhld";
-		passwordBE = "a123456789a";
 	}
 
 	@Test
-	public void TC_01_Register_Corp() {
+	public void Register_Corp() {
 		// go to registration email page
 		driver.get("https://reg-cfx-uatjp.nextop.asia/registration");
+		String email = "corp" + rand.nextInt(999999999) + "@maillinator.com";
 		// select corporation
 		driver.findElement(By.cssSelector("span.icons.corporation")).click();
 		sleepInSecond(1);
@@ -281,13 +282,21 @@ public class cfx_corp {
 		
 		// verify register success
 		Assert.assertEquals(driver.findElement(By.cssSelector("h4.title-upload span")).getText(), "確認書類等のご提出");
+
+		// logout register
+		driver.findElement(By.cssSelector("a.logout-url")).click();
+		sleepInSecond(2);
+		// logout maillocal
+		driver.get("http://maillocaluatjp.nextop.asia/");
+		sleepInSecond(1);
+		driver.findElement(By.cssSelector("div#topline a.button-logout")).click();
+		sleepInSecond(25);
 		
-		sleepInSecond(30);
 		// go to BE
 		driver.get("https://amsbe-cfx-uatjp.nextop.asia/account/Login");
 		// input user, password
 		driver.findElement(By.id("username_id")).sendKeys(usernameBE);
-		driver.findElement(By.id("password")).sendKeys(passwordBE);
+		driver.findElement(By.id("password")).sendKeys(passwordBE());
 		// click login
 		driver.findElement(By.cssSelector("button#but_login")).click();
 		sleepInSecond(2);
@@ -302,7 +311,7 @@ public class cfx_corp {
 		driver.findElement(By.xpath("//tr[@class='odd first last']//a[contains(@href,'detail-account-ams')]")).click();
 		switchToWindowByID(accountInformationID);
 		sleepInSecond(2);
-
+		
 		// select Account open status
 		driver.findElement(By.cssSelector("a#divNtdFxOpenStatus-button>span.ui-selectmenu-icon")).click();
 		sleepInSecond(1);
@@ -347,9 +356,18 @@ public class cfx_corp {
 
 		// verify open completed
 		Assert.assertEquals(driver.findElement(By.cssSelector("a#divNtdFxOpenStatus-button span.ui-selectmenu-status")).getText(),"Open Completed");
-		writeData(email + " has already been open completed!");
-	}
+		writeData(email);
+		
+		sleepInSecond(1);
+		driver.findElement(By.xpath("//a[text()='Logout']")).click();
 	
+	}
+
+	@Test
+	public void registerEmails() {
+		for (int i=0; i<3; i++)
+			Register_Corp();
+	}
 	public void switchToWindowByID(String pageID) {
 		Set<String> allIDs = driver.getWindowHandles();
 		for (String id : allIDs) {
@@ -359,12 +377,31 @@ public class cfx_corp {
 			}
 		}
 	}
+	
+	public static String passwordBE() {
+		String password = "";
+		try {
+			FileReader reader = new FileReader("passwordBE.txt");
+
+			BufferedReader bufferedReader = new BufferedReader(reader);
+			while ((password = bufferedReader.readLine()) != null) {
+				reader.close();
+				return password;
+			}
+			reader.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
     public static void writeData(String data) {
         try {
             FileWriter writer = new FileWriter("Account.txt", true);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
-            bufferedWriter.newLine();
             bufferedWriter.write(data);
+            bufferedWriter.newLine();
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -381,6 +418,6 @@ public class cfx_corp {
 
 	@AfterClass
 	public void afterClass() {
-		// driver.quit();
+		driver.quit();
 	}
 }
