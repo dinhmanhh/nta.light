@@ -1,9 +1,9 @@
 
 package webdriver;
 
-import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
-import java.io.FileReader;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -46,6 +46,7 @@ public class cfx_register_corp {
 		password = "a123456789";
 		establishedDate = "200001";
 		usernameBE = "manhld";
+		passwordBE = "a123456789a";
 	}
 
 	@Test
@@ -296,7 +297,7 @@ public class cfx_register_corp {
 		driver.get("https://amsbe-cfx-uatjp.nextop.asia/account/Login");
 		// input user, password
 		driver.findElement(By.id("username_id")).sendKeys(usernameBE);
-		driver.findElement(By.id("password")).sendKeys(passwordBE());
+		driver.findElement(By.id("password")).sendKeys(passwordBE);
 		// click login
 		driver.findElement(By.cssSelector("button#but_login")).click();
 		sleepInSecond(2);
@@ -362,8 +363,7 @@ public class cfx_register_corp {
 		driver.findElement(By.xpath("//a[text()='Logout']")).click();
 	
 	}
-
-	@Test
+	// neu muon tao 1 luc 4 account them @Test vao ham duoi nay
 	public void registerEmails() {
 		for (int i=0; i<3; i++)
 			Register_Corp();
@@ -377,7 +377,7 @@ public class cfx_register_corp {
 			}
 		}
 	}
-	
+	/*
 	public static String passwordBE() {
 		String password = "";
 		try {
@@ -395,7 +395,7 @@ public class cfx_register_corp {
 
 		return null;
 	}
-	
+	*/
     public static void writeData(String data) {
         try {
             FileWriter writer = new FileWriter("Account.txt", true);
