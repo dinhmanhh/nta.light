@@ -263,7 +263,7 @@ public class cfx_register_indi {
 		driver.findElement(By.xpath("//a[text()='Logout']")).click();
 	}
 	
-
+	@Test
 	public void registerEmails() {
 		for (int i=0; i<3; i++)
 			Register_Indi();
