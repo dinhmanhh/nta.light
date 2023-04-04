@@ -219,7 +219,7 @@ public class cfx_register_indi {
 		// select Account open status
 		driver.findElement(By.cssSelector("a#divNtdFxOpenStatus-button>span.ui-selectmenu-icon")).click();
 		sleepInSecond(1);
-		driver.findElement(By.xpath("//a[text()='Account Open Requesting']")).click();
+		driver.findElement(By.xpath("//ul[@id='divNtdFxOpenStatus-menu']//a[text()='Account Open Requesting']")).click();
 		// input change reason
 		driver.findElement(By.name("customer.changeReason")).sendKeys("changeto AccountOpenRequesting");
 		sleepInSecond(1);
@@ -233,7 +233,7 @@ public class cfx_register_indi {
 		// select Review Completed
 		driver.findElement(By.cssSelector("a#divNtdFxOpenStatus-button>span.ui-selectmenu-icon")).click();
 		sleepInSecond(1);
-		driver.findElement(By.xpath("//a[text()='Review Completed']")).click();
+		driver.findElement(By.xpath("//ul[@id='divNtdFxOpenStatus-menu']//a[text()='Review Completed']")).click();
 		// input change reason
 		driver.findElement(By.name("customer.changeReason")).sendKeys("changeto ReviewCompleted");
 		sleepInSecond(1);
@@ -247,7 +247,7 @@ public class cfx_register_indi {
 		// select Open Completed
 		driver.findElement(By.cssSelector("a#divNtdFxOpenStatus-button>span.ui-selectmenu-icon")).click();
 		sleepInSecond(1);
-		driver.findElement(By.xpath("//a[text()='Open Completed']")).click();
+		driver.findElement(By.xpath("//ul[@id='divNtdFxOpenStatus-menu']//a[text()='Open Completed']")).click();
 		// input change reason
 		driver.findElement(By.name("customer.changeReason")).sendKeys("changeto OpenCompleted");
 		sleepInSecond(1);
