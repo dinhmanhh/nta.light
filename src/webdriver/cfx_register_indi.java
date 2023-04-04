@@ -196,7 +196,6 @@ public class cfx_register_indi {
 		driver.findElement(By.cssSelector("div#topline a.button-logout")).click();
 		sleepInSecond(25);
 		
-		
 		// go to BE
 		driver.get("https://amsbe-cfx-uatjp.nextop.asia/account/Login");
 		// input user, password
