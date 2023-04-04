@@ -171,6 +171,8 @@ public class cfx_register_indi {
 		sleepInSecond(1);
 		// input account number - 口座番号
 		driver.findElement(By.name("accountNo")).sendKeys("8888888");
+		// input note
+		driver.findElement(By.name("note")).sendKeys("note");
 		// 情報のご案内
 		driver.findElement(By.xpath("//div[text()=' 情報のご案内 ']/parent::div//label/span[text()=' いいえ ']")).click();
 		sleepInSecond(1);
