@@ -3,7 +3,7 @@ package webdriver;
 
 
 import java.io.BufferedWriter;
-
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -28,6 +28,9 @@ public class cfx_register_corp {
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
 	String email, password, establishedDate, usernameBE, passwordBE;
+	String idDocsUpLoad = projectPath + File.separator + "uploadFiles" + File.separator + "idDocs.jpg";
+	String certificateUpload = projectPath + File.separator + "uploadFiles" + File.separator + "certificate.png";
+	String myNumberUpLoad = projectPath + File.separator + "uploadFiles" + File.separator + "myNumber.png";
 
 	@BeforeClass
 	public void beforeClass() {
@@ -210,6 +213,7 @@ public class cfx_register_corp {
 		driver.findElement(By.name("beneficOwnerSection3")).sendKeys("beneficOwnerSection3");
 		// benefic Owner Building Name 3 - マンション名・部屋番号
 		driver.findElement(By.name("beneficOwnerBuildingName3")).sendKeys("beneficOwnerBuildingName3");
+		sleepInSecond(1);
 		
 		// section 5
 		driver.findElement(By.xpath("//input[@name='copyRepresentative']/following-sibling::span[text()='はい']")).click();
@@ -283,6 +287,26 @@ public class cfx_register_corp {
 		
 		// verify register success
 		Assert.assertEquals(driver.findElement(By.cssSelector("h4.title-upload span")).getText(), "確認書類等のご提出");
+		// upload id Docs
+		driver.findElement(By.cssSelector("div#accordion2 i.icon-upload")).click();
+		driver.findElement(By.name("fileVerifyDoc1")).sendKeys(idDocsUpLoad);
+		sleepInSecond(1);
+		driver.findElement(By.xpath("//form[@name='uploadFileDOC']//button[text()='アップロード ']")).click();
+		sleepInSecond(1);
+		// upload Certificate
+		driver.findElement(By.cssSelector("div#accordion3 i.icon-upload")).click();
+		driver.findElement(By.name("fileVerifyDoc21")).sendKeys(certificateUpload);
+		sleepInSecond(1);
+		driver.findElement(By.xpath("//form[@name='uploadFileDOC2']//button[text()=' アップロード ']")).click();
+		sleepInSecond(1);
+		// upload my Number
+		driver.findElement(By.cssSelector("div#accordion4 i.icon-upload")).click();
+		driver.findElement(By.name("fileMyNumberImage1")).sendKeys(myNumberUpLoad);
+		sleepInSecond(1);
+		driver.findElement(By.xpath("//form[@name='uploadFileNumber']//button[text()='アップロード ']")).click();
+		sleepInSecond(2);
+		driver.navigate().back();
+		sleepInSecond(2);
 
 		// logout register
 		driver.findElement(By.cssSelector("a.logout-url")).click();
@@ -375,7 +399,7 @@ public class cfx_register_corp {
 				driver.switchTo().window(id);
 				sleepInSecond(1);
 			}
-		}
+		} 
 	}
 	/*
 	public static String passwordBE() {

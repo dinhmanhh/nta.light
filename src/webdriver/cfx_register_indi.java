@@ -4,7 +4,7 @@ package webdriver;
 
 
 import java.io.BufferedWriter;
-
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -27,7 +27,8 @@ public class cfx_register_indi {
 	String projectPath = System.getProperty("user.dir");
 	String osName = System.getProperty("os.name");
 	String password, birthday, usernameBE, passwordBE;
-
+	String idDocsUpLoad = projectPath + File.separator + "uploadFiles" + File.separator + "idDocs.jpg";
+	String myNumberUpLoad = projectPath + File.separator + "uploadFiles" + File.separator + "myNumber.png";
 	@BeforeClass
 	public void beforeClass() {
 		if (osName.contains("Windows")) {
@@ -187,14 +188,31 @@ public class cfx_register_indi {
 		
 		// verify register success
 		Assert.assertEquals(driver.findElement(By.cssSelector("h4.title-upload span")).getText(), "必要書類のご提出");
+		// upload id Docs
+		driver.findElement(By.cssSelector("div#accordion1 i.icon-upload")).click();
+		driver.findElement(By.name("fileVerifyDoc1")).sendKeys(idDocsUpLoad);
+		sleepInSecond(1);
+		driver.findElement(By.xpath("//form[@name='uploadFileDOC']//button[text()=' アップロード ']")).click();
+		sleepInSecond(1);
+		// upload my Number
+		driver.findElement(By.cssSelector("div#accordion2 i.icon-upload")).click();
+		driver.findElement(By.name("fileMyNumberImage1")).sendKeys(myNumberUpLoad);
+		sleepInSecond(1);
+		driver.findElement(By.xpath("//form[@name='uploadFileNumber']//button[text()=' アップロード ']")).click();
+		sleepInSecond(2);
+		
+		driver.navigate().back();
+		sleepInSecond(2);
+		
+		
 		// logout register
 		driver.findElement(By.cssSelector("a.logout-url")).click();
-		sleepInSecond(2);
+		sleepInSecond(1);
 		// logout maillocal
 		driver.get("http://maillocaluatjp.nextop.asia/");
 		sleepInSecond(1);
 		driver.findElement(By.cssSelector("div#topline a.button-logout")).click();
-		sleepInSecond(25);
+		sleepInSecond(20);
 		
 		// go to BE
 		driver.get("https://amsbe-cfx-uatjp.nextop.asia/account/Login");
@@ -263,6 +281,7 @@ public class cfx_register_indi {
 		writeData(email);	
 		sleepInSecond(1);
 		driver.findElement(By.xpath("//a[text()='Logout']")).click();
+		
 	}
 	
 	// neu muon tao 1 luc 4 account them @Test vao ham duoi nay
